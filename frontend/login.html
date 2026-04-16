@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Giriş</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <!-- Left Side: Illustrations -->
+        <div class="login-left">
+            <i class="fab fa-facebook" style="color: var(--primary); font-size: 50px; margin-bottom: 20px;"></i>
+            
+            <div class="collage">
+                <!-- Abstract collage mimicking the screenshot -->
+                <div class="collage-item c-1"><img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"></div>
+                <div class="collage-item c-2"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"></div>
+                <div class="collage-item c-3"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"></div>
+                <!-- Emoji decorations -->
+                <div class="emo e-1">😆</div>
+                <div class="emo e-2">❤️</div>
+            </div>
+
+            <h1 class="login-slogan">Sevdiğin<br>şeyleri<br>keşfet.</h1>
+        </div>
+
+        <!-- Right Side: Login Panel -->
+        <div class="login-right">
+            <div class="settings-icon"><i class="fas fa-cog"></i></div>
+            
+            <!-- Default View: Known User Card -->
+            <div id="known-user-view" class="login-card-view">
+                <div class="login-avatar-wrapper">
+                    <img id="login-known-avatar" src="https://i.pravatar.cc/150?img=11" alt="Profil">
+                </div>
+                <h2 id="login-known-name">Ahmet Karaman</h2>
+                
+                <button class="btn-primary-large" id="btn-continue">Devam</button>
+                <button class="btn-outline" id="btn-switch-user">Başka bir profil kullan</button>
+                <button class="btn-outline" id="btn-create-account-view">Yeni hesap oluştur</button>
+            </div>
+
+            <!-- Alternate View: Enter / Select Username -->
+            <div id="select-user-view" class="login-card-view" style="display: none;">
+                <h2>Profil Seçin veya Girin</h2>
+                <input type="text" id="login-username-input" placeholder="Kullanıcı Adı (ör. alice, bob)" class="login-input">
+                <button class="btn-primary-large" id="btn-login-manual">Giriş Yap</button>
+                <button class="btn-outline" id="btn-back-to-known">Geri Dön</button>
+            </div>
+
+            <!-- Alternate View: Create Account -->
+            <div id="create-account-view" class="login-card-view" style="display: none;">
+                <h2>Yeni Hesap Oluştur</h2>
+                <input type="text" id="reg-username" placeholder="Kullanıcı Adı (Benzersiz)" class="login-input">
+                <input type="text" id="reg-fullname" placeholder="Ad Soyad" class="login-input">
+                <button class="btn-primary-large" id="btn-register">Kaydol ve Giriş Yap</button>
+                <button class="btn-outline" id="btn-cancel-register">İptal</button>
+            </div>
+
+            <div class="meta-logo">
+                <span style="font-weight: bold; font-family: sans-serif; color: #1c2b33; font-size: 18px;">∞ Meta</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login specific JS -->
+    <script>
+        const API_BASE = 'http://localhost:3000';
+        const knownUserView = document.getElementById('known-user-view');
+        const selectUserView = document.getElementById('select-user-view');
+        const createAccountView = document.getElementById('create-account-view');
+
+        // Check if user has a stored selection
+        let storedUser = localStorage.getItem('fb_current_user');
+        
+        function showView(view) {
+            knownUserView.style.display = 'none';
+            selectUserView.style.display = 'none';
+            createAccountView.style.display = 'none';
+            view.style.display = 'block';
+        }
+
+        if (storedUser) {
+            document.getElementById('login-known-name').textContent = storedUser.charAt(0).toUpperCase() + storedUser.slice(1);
+            let sum = 0; for(let i=0; i<storedUser.length; i++) sum += storedUser.charCodeAt(i);
+            document.getElementById('login-known-avatar').src = `https://i.pravatar.cc/150?img=${(sum % 70) + 1}`;
+            showView(knownUserView);
+        } else {
+            // First time ever
+            showView(selectUserView);
+        }
+
+        document.getElementById('btn-continue').addEventListener('click', () => {
+             window.location.href = 'index.html';
+        });
+
+        document.getElementById('btn-switch-user').addEventListener('click', () => {
+             showView(selectUserView);
+        });
+
+        document.getElementById('btn-back-to-known').addEventListener('click', () => {
+             if (storedUser) showView(knownUserView);
+        });
+
+        document.getElementById('btn-create-account-view').addEventListener('click', () => {
+             showView(createAccountView);
+        });
+
+        document.getElementById('btn-cancel-register').addEventListener('click', () => {
+             if (storedUser) showView(knownUserView);
+             else showView(selectUserView);
+        });
+
+        // Manual Login
+        document.getElementById('btn-login-manual').addEventListener('click', () => {
+             const user = document.getElementById('login-username-input').value.trim().toLowerCase();
+             if (user) {
+                 localStorage.setItem('fb_current_user', user);
+                 window.location.href = 'index.html';
+             }
+        });
+
+        // Register Account via API
+        document.getElementById('btn-register').addEventListener('click', async () => {
+             const username = document.getElementById('reg-username').value.trim().toLowerCase();
+             const fullname = document.getElementById('reg-fullname').value.trim();
+
+             if (!username || !fullname) {
+                 alert('Lütfen tüm alanları doldurun.');
+                 return;
+             }
+
+             document.getElementById('btn-register').textContent = 'Bekleyin...';
+
+             try {
+                 const res = await fetch(`${API_BASE}/register`, {
+                     method: 'POST',
+                     headers: { 'Content-Type': 'application/json' },
+                     body: JSON.stringify({ username: username, display_name: fullname })
+                 });
+
+                 if (res.status === 201 || res.status === 409) {
+                     // 201 Created or 409 Conflict (Already exists) -> just login anyway for UX
+                     localStorage.setItem('fb_current_user', username);
+                     window.location.href = 'index.html';
+                 } else {
+                     alert('Kayıt başarısız oldu.');
+                     document.getElementById('btn-register').textContent = 'Kaydol ve Giriş Yap';
+                 }
+             } catch (e) {
+                 alert('Sunucu hatası: ' + e.message);
+                 document.getElementById('btn-register').textContent = 'Kaydol ve Giriş Yap';
+             }
+        });
+    </script>
+</body>
+</html>

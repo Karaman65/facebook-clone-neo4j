@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <i class="fab fa-facebook fb-logo"></i>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Facebook'ta Ara">
+            </div>
+        </div>
+        <div class="nav-center">
+            <div class="nav-btn active"><i class="fas fa-home"></i></div>
+            <div class="nav-btn"><i class="fas fa-tv"></i></div>
+            <div class="nav-btn"><i class="fas fa-store"></i></div>
+            <div class="nav-btn"><i class="fas fa-users"></i></div>
+            <div class="nav-btn"><i class="fas fa-gamepad"></i></div>
+        </div>
+        <div class="nav-right">
+            <div class="profile-btn">
+                <img src="https://i.pravatar.cc/150?img=11" alt="Profil">
+                <span id="current-user-display" onclick="window.location.href='profile.html'">Ahmet</span>
+            </div>
+            <div class="icon-btn"><i class="fas fa-bars"></i></div>
+            <div class="icon-btn"><i class="fab fa-facebook-messenger"></i></div>
+            <div class="icon-btn"><i class="fas fa-bell"></i><span class="badge">20+</span></div>
+            <img src="https://i.pravatar.cc/150?img=11" alt="Hesap" class="small-avatar">
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Left Sidebar -->
+        <div class="left-sidebar">
+            <div class="sidebar-item" onclick="window.location.href='profile.html'">
+                <img src="https://i.pravatar.cc/150?img=11" alt="Profil">
+                <span>Ahmet Karaman</span>
+            </div>
+            <div class="sidebar-item">
+                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y8/r/S0U5ECzYUSu.png" alt="Arkadaslar">
+                <span>Arkadaşlar</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-clock" style="color: #1877f2; font-size: 24px; text-align:center; width:36px;"></i>
+                <span>Anılar</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-bookmark" style="color: #a333c8; font-size: 24px; text-align:center; width:36px;"></i>
+                <span>Kaydedilenler</span>
+            </div>
+            <div class="sidebar-item">
+                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png" alt="Gruplar">
+                <span>Gruplar</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-chevron-down" style="background:#e4e6eb; border-radius:50%; padding:8px;"></i>
+                <span>Daha Fazlasını Gör</span>
+            </div>
+            <hr>
+            <h4>Kısayolların</h4>
+            <div class="sidebar-item">
+                <img src="https://i.pravatar.cc/150?img=20" alt="Oyun" style="border-radius:8px;">
+                <span>101 YüzBir Okey Plus</span>
+            </div>
+            <div class="sidebar-item">
+                <img src="https://i.pravatar.cc/150?img=30" alt="Oyun" style="border-radius:8px;">
+                <span>8 Ball Pool</span>
+            </div>
+        </div>
+
+        <!-- Feed Center -->
+        <div class="content-area">
+            <!-- Stories -->
+            <div class="stories" id="stories-container">
+                <div class="story create-story">
+                    <img src="https://i.pravatar.cc/150?img=11" alt="Profil">
+                    <div class="add-story-btn"><i class="fas fa-plus"></i></div>
+                    <span>Hikaye Oluştur</span>
+                </div>
+                <!-- Dynamic stories via JS -->
+            </div>
+
+            <!-- Create Post -->
+            <div class="create-post">
+                <div class="create-post-top">
+                    <img src="https://i.pravatar.cc/150?img=11" alt="Profil">
+                    <input type="text" id="post-content" placeholder="Ne düşünüyorsun, Ahmet?">
+                </div>
+                <hr>
+                <div class="create-post-bottom">
+                    <div class="post-action">
+                        <i class="fas fa-video" style="color: #f3425f;"></i>
+                        <span>Canlı video</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-images" style="color: #45bd62;"></i>
+                        <span>Fotoğraf/video</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="far fa-smile" style="color: #f7b928;"></i>
+                        <span>His/hareket</span>
+                    </div>
+                </div>
+                <div class="post-submit-container">
+                    <select id="post-visibility">
+                        <option value="public">Herkes</option>
+                        <option value="friends">Arkadaşlar</option>
+                        <option value="friends_of_friends">Arkadaşın Arkadaşları</option>
+                        <option value="private">Sadece Ben</option>
+                    </select>
+                    <button class="submit-btn" id="post-btn">Paylaş</button>
+                </div>
+            </div>
+
+            <!-- Feed -->
+            <div class="feed" id="feed-container">
+                <!-- Posts will be loaded here dynamically -->
+            </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="right-sidebar">
+            <div class="contacts-header">
+                <h4>Sponsorlu</h4>
+            </div>
+            <div class="sponsored-item">
+                <img src="https://i.pravatar.cc/300?img=15" alt="Ad">
+                <div>
+                    <h5>Make Music with Suno</h5>
+                    <p>suno.com</p>
+                </div>
+            </div>
+            <div class="sponsored-item">
+                <img src="https://i.pravatar.cc/300?img=25" alt="Ad">
+                <div>
+                    <h5>Adobe Firefly</h5>
+                    <p>adobe.com</p>
+                </div>
+            </div>
+            <hr>
+            <div class="contacts-header">
+                <h4>Doğum Günleri</h4>
+            </div>
+            <div class="birthday-item">
+                <i class="fa fa-gift" style="color:#0866ff; font-size: 24px; margin-right: 15px;"></i>
+                <p>Bugün <strong>Stüdyo Adem</strong> ve <strong>Yavuz Yağız</strong>'ın doğum günü.</p>
+            </div>
+            <hr>
+            <div class="contacts-header">
+                <h4>Kişiler</h4>
+                <div class="contact-icons">
+                    <i class="fas fa-search"></i>
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+            <div id="contacts-list">
+                <!-- Contacts will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Login redirect check is handled in app.js -->
+
+    <script src="app.js"></script>
+</body>
+</html>

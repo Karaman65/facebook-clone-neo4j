@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmet Karaman | Facebook</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <i class="fab fa-facebook fb-logo" onclick="window.location.href='index.html'" style="cursor:pointer;"></i>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Facebook'ta Ara">
+            </div>
+        </div>
+        <div class="nav-center">
+            <div class="nav-btn" onclick="window.location.href='index.html'"><i class="fas fa-home"></i></div>
+            <div class="nav-btn"><i class="fas fa-tv"></i></div>
+            <div class="nav-btn"><i class="fas fa-store"></i></div>
+            <div class="nav-btn"><i class="fas fa-users"></i></div>
+            <div class="nav-btn"><i class="fas fa-gamepad"></i></div>
+        </div>
+        <div class="nav-right">
+            <div class="profile-btn active">
+                <img src="https://i.pravatar.cc/150?img=11" alt="Profil">
+                <span id="current-user-display">Ahmet</span>
+            </div>
+            <div class="icon-btn"><i class="fas fa-bars"></i></div>
+            <div class="icon-btn"><i class="fab fa-facebook-messenger"></i></div>
+            <div class="icon-btn"><i class="fas fa-bell"></i><span class="badge">20+</span></div>
+            <img src="https://i.pravatar.cc/150?img=11" alt="Hesap" class="small-avatar">
+        </div>
+    </nav>
+
+    <!-- Profile Header Container -->
+    <div class="profile-page-container">
+        <div class="profile-header-wrapper">
+            <div class="cover-photo">
+                <img src="https://images.unsplash.com/photo-1506744626753-1fa44f4a4df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Kapak Fotoğrafı">
+                <button class="add-cover-btn"><i class="fas fa-camera"></i> Kapak Fotoğrafı Ekle</button>
+            </div>
+            
+            <div class="profile-info-section">
+                <div class="profile-avatar-wrapper">
+                    <img src="https://i.pravatar.cc/150?img=11" alt="Profil">
+                    <div class="avatar-camera"><i class="fas fa-camera"></i></div>
+                </div>
+                
+                <div class="profile-text-actions">
+                    <div class="profile-name-info">
+                        <h1>Ahmet Karaman</h1>
+                        <a href="#">798 arkadaş</a>
+                        <div class="mutual-friends-avatars">
+                            <!-- Small avatars for friends -->
+                            <img src="https://i.pravatar.cc/150?img=1">
+                            <img src="https://i.pravatar.cc/150?img=2">
+                            <img src="https://i.pravatar.cc/150?img=3">
+                            <img src="https://i.pravatar.cc/150?img=4">
+                        </div>
+                    </div>
+                    
+                    <div class="profile-action-buttons">
+                        <button class="btn-primary"><i class="fas fa-plus-circle"></i> Hikayeye ekleme yap</button>
+                        <button class="btn-secondary"><i class="fas fa-pen"></i> Profili düzenle</button>
+                        <button class="btn-secondary px-2"><i class="fas fa-chevron-down"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-tabs">
+                <div class="profile-tab active">Gönderiler</div>
+                <div class="profile-tab">Hakkında</div>
+                <div class="profile-tab">Arkadaşlar</div>
+                <div class="profile-tab">Fotoğraflar</div>
+                <div class="profile-tab">Reels</div>
+                <div class="profile-tab">Diğer <i class="fas fa-caret-down"></i></div>
+                <div class="profile-tab-spacer"></div>
+                <div class="profile-tab-icon"><i class="fas fa-ellipsis-h"></i></div>
+            </div>
+        </div>
+
+        <!-- Profile Content -->
+        <div class="profile-content-wrapper">
+            <!-- Left Column: Intro -->
+            <div class="profile-left-col">
+                <div class="profile-card">
+                    <h3>Kişisel detaylar</h3>
+                    <ul class="intro-list">
+                        <li><i class="fas fa-map-marker-alt"></i> Van'da yaşıyor</li>
+                        <li><i class="fas fa-home"></i> Memleketi Van</li>
+                        <li><i class="fas fa-birthday-cake"></i> 8 Şubat 2004</li>
+                    </ul>
+                    <button class="btn-gray full-width">Ayrıntıları Düzenle</button>
+                    <button class="btn-gray full-width">Öne Çıkanlara Ekle</button>
+                </div>
+
+                <div class="profile-card mt-3">
+                    <div class="card-header">
+                        <div>
+                            <h3>Arkadaşlar</h3>
+                            <span class="text-muted">798 arkadaş</span>
+                        </div>
+                        <a href="#">Tümünü gör</a>
+                    </div>
+                    <div class="friends-grid" id="profile-friends-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Feed -->
+            <div class="profile-right-col">
+                <div class="create-post profile-card">
+                    <div class="create-post-top">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="Profil">
+                        <input type="text" id="post-content" placeholder="Ne düşünüyorsun?">
+                    </div>
+                    <hr>
+                    <div class="create-post-bottom">
+                        <div class="post-action">
+                            <i class="fas fa-video" style="color: #f3425f;"></i>
+                            <span>Canlı video</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="fas fa-images" style="color: #45bd62;"></i>
+                            <span>Fotoğraf/video</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="fas fa-flag" style="color: #3bb273;"></i>
+                            <span>Hayatındaki önemli gelişme</span>
+                        </div>
+                    </div>
+                    <div class="post-submit-container">
+                        <select id="post-visibility">
+                            <option value="public">Herkes</option>
+                            <option value="friends">Arkadaşlar</option>
+                            <option value="friends_of_friends">Arkadaşın Arkadaşları</option>
+                            <option value="private">Sadece Ben</option>
+                        </select>
+                        <button class="submit-btn" id="post-btn">Paylaş</button>
+                    </div>
+                </div>
+
+                <div class="profile-card mt-3 posts-filter">
+                    <h3>Gönderiler</h3>
+                    <div class="filter-actions">
+                        <button class="btn-gray"><i class="fas fa-sliders-h"></i> Filtreler</button>
+                        <button class="btn-gray"><i class="fas fa-cog"></i> Gönderileri yönet</button>
+                    </div>
+                </div>
+
+                <!-- Feed -->
+                <div class="feed" id="feed-container">
+                    <!-- Posts will be loaded here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
