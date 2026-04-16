@@ -1,0 +1,180 @@
+### =====================================
+### FACEBOOK CLONE NEO4J - API TESTLERI
+### =====================================
+
+@baseUrl = http://localhost:3000
+
+### 1 Sağlık Kontrolü
+GET {{baseUrl}}/health
+
+### =====================================
+### KULLANICI ISLEMLERI
+### =====================================
+
+### 2 Alice Kullanıcısını Kaydet
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "username": "alice",
+  "display_name": "Alice Johnson"
+}
+
+### 3 Bob Kullanıcısını Kaydet
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "username": "bob",
+  "display_name": "Bob Smith"
+}
+
+### 4 Charlie Kullanıcısını Kaydet
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "username": "charlie",
+  "display_name": "Charlie Brown"
+}
+
+### 5 Kullanıcı Profilini Görüntüle (Alice)
+GET {{baseUrl}}/users/alice
+
+### =====================================
+### ARKADASLIK ISLEMLERI
+### =====================================
+
+### 6 Alice'ten Bob'a Arkadaşlık İsteği
+POST {{baseUrl}}/friend-request
+Content-Type: application/json
+
+{
+  "from": "alice",
+  "to": "bob"
+}
+
+### 7 Bob, Alice'in İsteğini Kabul Eder (Arkadaş Olurlar)
+POST {{baseUrl}}/friend-accept
+Content-Type: application/json
+
+{
+  "from": "bob",
+  "to": "alice"
+}
+
+### 8 Bob'dan Charlie'ye Arkadaşlık İsteği ve Kabulü
+POST {{baseUrl}}/friend-request
+Content-Type: application/json
+
+{
+  "from": "bob",
+  "to": "charlie"
+}
+
+### 
+POST {{baseUrl}}/friend-accept
+Content-Type: application/json
+
+{
+  "from": "charlie",
+  "to": "bob"
+}
+
+### 9 Alice'in Arkadaşlarını Listele
+GET {{baseUrl}}/users/alice/friends
+
+### =====================================
+### POST & FEED ISLEMLERI (GORUNURLUK)
+### =====================================
+
+### 10 Alice "Herkese Açık (public)" Post Paylaşır
+POST {{baseUrl}}/posts
+Content-Type: application/json
+
+{
+  "username": "alice",
+  "content": "Herkese merhaba, public post!",
+  "visibility": "public"
+}
+
+### 11 Alice Sadece "Arkadaşlar (friends)" Post Paylaşır
+POST {{baseUrl}}/posts
+Content-Type: application/json
+
+{
+  "username": "alice",
+  "content": "Sadece arkadaşlarım görebilir.",
+  "visibility": "friends"
+}
+
+### 12 Bob Kendi Kendi Profilinden Feed (Haber Akışı) Görüntüler
+# Beklenen: Alice'in her iki postunu da görmeli.
+GET {{baseUrl}}/feed/bob
+
+### 13 Charlie (Alice'in arkadaşı değil) Kendi Feed'ini Görüntüler
+# Beklenen: Alice'in sadece public postunu görmeli, friends postunu görmemeli.
+GET {{baseUrl}}/feed/charlie
+
+### =====================================
+### GRAF TRAVERSAL SORGULARI
+### =====================================
+
+### 14 Arkadaşımın Arkadaşları (Friends of Friends) - Alice İçin
+# Alice'in arkadaşı Bob. Bob'un arkadaşı Charlie. Alice Charlie'yi görmeli.
+GET {{baseUrl}}/users/alice/friends-of-friends
+
+### 15 Arkadaş Önerileri (Ortak Arkadaş Sayısına Göre)
+GET {{baseUrl}}/users/alice/suggestions
+
+### 16 Ortak Arkadaşlar (Alice ve Charlie Arasında)
+# Beklenen: Bob
+GET {{baseUrl}}/users/alice/mutual-friends/charlie
+
+### =====================================
+### MESAJLASMA (YETKI KONTROLU)
+### =====================================
+
+### 17 Alice -> Bob (Arkadaş) Mesaj Gönderimi
+POST {{baseUrl}}/messages
+Content-Type: application/json
+
+{
+  "from": "alice",
+  "to": "bob",
+  "content": "Nasılsın Bob, görüşmeyeli uzun zaman oldu!"
+}
+
+### 18 Alice -> Charlie (Arkadaşın Arkadaşı) Mesaj Gönderimi (1-2 HOP Yetkisi)
+POST {{baseUrl}}/messages
+Content-Type: application/json
+
+{
+  "from": "alice",
+  "to": "charlie",
+  "content": "Merhaba Charlie, ben Bob'un arkadaşı Alice."
+}
+
+### 19 Mesajları Görüntüle (Bob'un Gelen Kutusu)
+GET {{baseUrl}}/messages/bob
+
+### 20 Yetkisiz Mesaj Testi (Örnek: Arada bağ olmayan David kişisinden Alice'e)
+# Önce David'i ekleyelim
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "username": "david",
+  "display_name": "David"
+}
+
+### 
+# David'den Alice'e Mesaj (Hata vermeli - 403 Forbidden)
+POST {{baseUrl}}/messages
+Content-Type: application/json
+
+{
+  "from": "david",
+  "to": "alice",
+  "content": "Ben tanımadığın biriyim."
+}
